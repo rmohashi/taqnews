@@ -8,6 +8,7 @@ defmodule Taqnews.News do
 
   alias Taqnews.News.Week
   alias Taqnews.News.Post
+  alias Taqnews.News.Comment
 
   @doc """
   Returns the list of weeks.
@@ -128,6 +129,34 @@ defmodule Taqnews.News do
   def update_post(%Post{} = post, attrs) do
     post
     |> Post.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def list_comments(post) do
+    Comment
+    |> where([c], c.post_id == ^post.id)
+    |> Repo.all
+  end
+
+  def get_comment!(post, id) do
+    Comment
+    |> where([c], c.post_id == ^post.id)
+    |> Repo.get!(id)
+  end
+
+  def delete_comment(%Comment{} = comment) do
+    Repo.delete(comment)
+  end
+
+  def create_comment(attrs \\ %{}) do
+    %Comment{}
+    |> Comment.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_comment(%Comment{} = comment, attrs) do
+    comment
+    |> Comment.changeset(attrs)
     |> Repo.update()
   end
 end

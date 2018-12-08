@@ -2,7 +2,6 @@ defmodule Taqnews.News.Post do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "posts" do
     field :description, :string
     field :link, :string
