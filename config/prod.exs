@@ -12,18 +12,18 @@ use Mix.Config
 config :taqnews, TaqnewsWeb.Endpoint,
   url: [scheme: "https", host: "taqnews.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  cache_static_manifest: "priv/static/cache_manifest.json",
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
-
-# Do not print debug messages in production
-config :logger, level: :info
+  cache_static_manifest: "priv/static/manifest.json",
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Configure your database
 config :taqnews, TaqnewsWeb.Repo,
+  adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
 
+# Do not print debug messages in production
+config :logger, level: :info
 
 # ## SSL Support
 #

@@ -2,7 +2,7 @@ defmodule TaqnewsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :taqnews
 
   socket "/socket", TaqnewsWeb.UserSocket,
-    websocket: true,
+    websocket: [timeout: 45_000],
     longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
@@ -39,6 +39,10 @@ defmodule TaqnewsWeb.Endpoint do
     store: :cookie,
     key: "_taqnews_key",
     signing_salt: "I6B+qLr2"
+
+  plug Corsica,
+    origins: ["http://localhost:8080", "https://taqnews-909f8.firebaseapp.com"],
+    log: [rejected: :error, invalid: :warn, accepted: :debug]
 
   plug TaqnewsWeb.Router
 end
