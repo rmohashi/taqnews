@@ -7,6 +7,8 @@ defmodule TaqnewsWeb.Router do
 
   scope "/api", TaqnewsWeb do
     pipe_through :api
-    resources "/weeks", WeekController, except: [:new, :edit]
+    resources "/weeks", WeekController, except: [:new, :edit] do
+      resources "/posts", PostController, except: [:new, :edit]
+    end
   end
 end
